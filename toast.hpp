@@ -25,10 +25,27 @@ struct data {
 
 class toast {
 private:
+  static constexpr char kFileName[]{"/.toast"};
   static constexpr char kUsage[]{
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
   };
-  static constexpr char kFileName[]{"/.toast"};
+  static constexpr char kVersion[]{
+    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.1 (https://github.com/ViralTaco/Toast)\n"
+  };
+  static constexpr char kHelp[]{
+    "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
+    "make <string>    Makes a toast \n"
+    "                 ie: toast make \"Make a new toast\"\n"
+    "do <string>      Same as make\n"
+    "cut <ID>         Removes a toast from the list\n"
+    "                 ie: toast cut 1\n"
+    "rm <ID>          Same as cut\n"
+    "done <ID>        Check the box of the toast ID\n"
+    "                 ie: toast done 2\n"
+    "version          Show version\n"
+    "help             Show this help message\n"
+  };
+  
   std::string filepath_;
   const std::string command_;
   std::string arg_;
@@ -46,6 +63,10 @@ public:
     filepath_ += kFileName;
     if (command_ == "clear") {
        cleartoast();  
+    } else if (command_ == "--version" or command_ == "version") {
+      std::cout << kVersion;
+    } else if (command_ == "--help" or command_ == "help") {
+      std::cout << kHelp;
     } else {
       print_usage();
     }
