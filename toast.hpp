@@ -61,7 +61,7 @@ public:
   }
   
 private:
-  void exec_command() noexcept(true) {
+  void exec_command() noexcept(false) {
     if (m_command == "make" or m_command == "do") {
       mktoast();
     } else if (m_command == "cut" or m_command == "rm") {
