@@ -13,12 +13,12 @@
 
 namespace vt {
 struct data {
-  std::string m_msg;
-  bool m_is_checked;
+  std::string msg_;
+  bool is_checked_;
   [[maybe_unused]] unsigned char padding[7];
   
   data(const bool is_checked, std::string msg)
-  : m_msg{msg}, m_is_checked{is_checked} {
+  : msg_{msg}, is_checked_{is_checked} {
   }
 };
 
@@ -29,22 +29,22 @@ private:
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
   };
   static constexpr char kFileName[]{"/.toast"};
-  std::string m_filepath;
-  const std::string m_command;
-  std::string m_arg;
+  std::string filepath_;
+  const std::string command_;
+  std::string arg_;
 
-  std::vector<data> m_data_vector;
+  std::vector<data> data_vector_;
   
 public:
-  toast() noexcept(true) : m_filepath{std::getenv("HOME")} {
-    m_filepath += kFileName;
-    m_data_vector = fill_data_vector();
+  toast() noexcept(true) : filepath_{std::getenv("HOME")} {
+    filepath_ += kFileName;
+    data_vector_ = fill_data_vector();
   }
   
   toast(const std::string command) noexcept(true)
-  : m_filepath{std::getenv("HOME")}, m_command{command} {
-    m_filepath += kFileName;
-    if (m_command == "clear") {
+  : filepath_{std::getenv("HOME")}, command_{command} {
+    filepath_ += kFileName;
+    if (command_ == "clear") {
        cleartoast();  
     } else {
       print_usage();
@@ -52,30 +52,36 @@ public:
   }
   
   toast(const std::string command, const std::string arg) noexcept(true) 
-  : m_filepath{std::getenv("HOME")}, m_command{command}, m_arg{arg} {
+  : filepath_{std::getenv("HOME")}, command_{command}, arg_{arg} {
     if (arg.length() >= 60) print_usage();
     
-    m_filepath += kFileName;
-    m_data_vector = fill_data_vector(); 
+    filepath_ += kFileName;
+    data_vector_ = fill_data_vector(); 
     exec_command();
   }
   
 private:
-  void exec_command() noexcept(false) {
-    if (m_command == "make" or m_command == "do") {
+  void exec_command() noexcept(true) {
+    if (command_ == "make" or command_ == "do") {
       mktoast();
-    } else if (m_command == "cut" or m_command == "rm") {
-      rmtoast(std::stoul(m_arg) - 1);
-    } else if (m_command == "done") {
-      try { 
-        checktoast(std::stoul(m_arg) - 1);
-      } catch ([[maybe_unused]] std::invalid_argument& e) {
-        print_usage();
-      }
+    } else if (command_ == "cut" or command_ == "rm") {
+      rmtoast(to_size_t(arg_) - 1);
+    } else if (command_ == "done") {
+      checktoast(to_size_t(arg_) - 1);
     } else {
       print_usage(); 
     }
-    m_data_vector = fill_data_vector();
+    data_vector_ = fill_data_vector();
+  }
+  
+  size_t to_size_t(std::string& arg) const noexcept(false) {
+    size_t result = 0;
+    try { 
+      result = std::stoul(arg);
+    } catch ([[maybe_unused]] std::invalid_argument& e) {
+      print_usage();
+    }
+    return result;
   }
   
   bool is_alpha(const std::string& str) const noexcept(true) {
@@ -85,7 +91,7 @@ private:
   }
   
   bool does_exist(size_t id) const noexcept(false) {
-    return id < m_data_vector.size();
+    return id < data_vector_.size();
   }
   
   [[noreturn]] void no_such_toast() const noexcept(true) {
@@ -94,38 +100,38 @@ private:
   }
   
   void mktoast() const noexcept(false) {
-    std::ofstream to_toast(m_filepath, std::ios::app);
-    to_toast << m_data_vector.size() + 1 << " [ ] " << m_arg << std::endl;
+    std::ofstream to_toast(filepath_, std::ios::app);
+    to_toast << data_vector_.size() + 1 << " [ ] " << arg_ << std::endl;
   }
   
   void mkalltoasts(size_t i = 0) const noexcept(false) {
-    std::ofstream new_toast(m_filepath, std::ios::trunc); 
-    for (const auto& d: m_data_vector) {
-      char mark = d.m_is_checked ? '*' : ' ';
-      new_toast << ++i << " [" << mark << "] " << d.m_msg << std::endl;
+    std::ofstream new_toast(filepath_, std::ios::trunc); 
+    for (const auto& d: data_vector_) {
+      char mark = d.is_checked_ ? '*' : ' ';
+      new_toast << ++i << " [" << mark << "] " << d.msg_ << std::endl;
     }
   }
   
   void rmtoast(size_t id) noexcept(false) {
     if (not does_exist(id)) no_such_toast();
-    m_data_vector.erase(m_data_vector.begin() + static_cast<long>(id));
-    m_data_vector.shrink_to_fit();
+    data_vector_.erase(data_vector_.begin() + static_cast<long>(id));
+    data_vector_.shrink_to_fit();
     mkalltoasts();
   }
   
   void cleartoast() const noexcept(false) {
-    std::ofstream clear_toast(m_filepath, std::ofstream::out | std::ios::trunc);
+    std::ofstream clear_toast(filepath_, std::ofstream::out | std::ios::trunc);
     clear_toast.close();
   }
   
   void checktoast(size_t id) noexcept(false) {
     if (not does_exist(id)) no_such_toast();
-    m_data_vector.at(id).m_is_checked = true;
+    data_vector_.at(id).is_checked_ = true;
     mkalltoasts();
   }
   
   [[nodiscard]] std::vector<data> fill_data_vector() const noexcept(false) {
-    std::ifstream filestream(m_filepath, std::ios::in);
+    std::ifstream filestream(filepath_, std::ios::in);
     std::vector<data> d;
     
     for (std::string line; std::getline(filestream, line);) {
@@ -142,9 +148,9 @@ private:
 
 public: 
   void print(size_t i = 0) const noexcept(false) {
-    for (const auto& d: m_data_vector) {
-      std::string mark = (d.m_is_checked) ? "\x1b[92m*\x1b[0m" : " ";
-      std::cout << ++i << " [" << mark << "] " << d.m_msg << '\n';
+    for (const auto& d: data_vector_) {
+      std::string mark = (d.is_checked_) ? "\x1b[92m*\x1b[0m" : " ";
+      std::cout << ++i << " [" << mark << "] " << d.msg_ << '\n';
     }
   }
 };
