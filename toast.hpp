@@ -32,7 +32,7 @@ private:
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
   };
   static constexpr char kVersion[]{
-    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.1 (https://github.com/ViralTaco/Toast)\n"
+    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.2 (https://github.com/ViralTaco/Toast)\n"
   };
   static constexpr char kHelp[]{
     "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
@@ -53,7 +53,7 @@ private:
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
   };
   const char *kVersion{
-    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.1 (https://github.com/ViralTaco/Toast)\n"
+    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.2 (https://github.com/ViralTaco/Toast)\n"
   };
   const char *kHelp{
     "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
