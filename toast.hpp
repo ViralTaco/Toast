@@ -32,7 +32,7 @@ private:
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
   };
   static constexpr char kVersion[]{
-    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.2 (https://github.com/ViralTaco/Toast)\n"
+    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.2~a (https://github.com/ViralTaco/Toast)\n"
   };
   static constexpr char kHelp[]{
     "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
@@ -47,13 +47,13 @@ private:
     "version          Show version\n"
     "help             Show this help message\n"
   };
-#elif defined (__cplusplus) && (__cplusplus <= 201703L)
+#else
   const char *kFileName{"/.toast"};
   const char *kUsage{
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
   };
   const char *kVersion{
-    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.2 (https://github.com/ViralTaco/Toast)\n"
+    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.2~a (https://github.com/ViralTaco/Toast)\n"
   };
   const char *kHelp{
     "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
