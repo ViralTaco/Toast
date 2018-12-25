@@ -8,7 +8,7 @@
 #include <cstring>
 
 int main(int argc, char *argv[]) {
-  static const char* kUser = std::getenv("USER");
+  const char* kUser = std::getenv("USER");
   if (strcmp(kUser, "root") == 0) {
     std::cout << "Toast: who dis?\n";
     std::cerr << "Toast: error: cannot run as root\n";

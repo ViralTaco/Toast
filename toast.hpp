@@ -15,7 +15,7 @@ namespace vt {
 struct data {
   std::string msg_;
   bool is_checked_;
-  [[maybe_unused]] unsigned char padding[7];
+  unsigned char padding[7];
   
   data(const bool is_checked, std::string msg)
   : msg_{msg}, is_checked_{is_checked} {
@@ -25,6 +25,8 @@ struct data {
 
 class toast {
 private:
+  
+#if defined(__cplusplus) && (__cplusplus > 201703L)
   static constexpr char kFileName[]{"/.toast"};
   static constexpr char kUsage[]{
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
@@ -45,6 +47,28 @@ private:
     "version          Show version\n"
     "help             Show this help message\n"
   };
+#elif defined (__cplusplus) && (__cplusplus <= 201703L)
+  const char *kFileName{"/.toast"};
+  const char *kUsage{
+    "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
+  };
+  const char *kVersion{
+    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.1 (https://github.com/ViralTaco/Toast)\n"
+  };
+  const char *kHelp{
+    "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
+    "make <string>    Makes a toast \n"
+    "                 ie: toast make \"Make a new toast\"\n"
+    "do <string>      Same as make\n"
+    "cut <ID>         Removes a toast from the list\n"
+    "                 ie: toast cut 1\n"
+    "rm <ID>          Same as cut\n"
+    "done <ID>        Check the box of the toast ID\n"
+    "                 ie: toast done 2\n"
+    "version          Show version\n"
+    "help             Show this help message\n"
+  };
+#endif
   
   std::string filepath_;
   const std::string command_;
@@ -151,7 +175,7 @@ private:
     mkalltoasts();
   }
   
-  [[nodiscard]] std::vector<data> fill_data_vector() const noexcept(false) {
+  std::vector<data> fill_data_vector() const noexcept(false) {
     std::ifstream filestream(filepath_, std::ios::in);
     std::vector<data> d;
     
@@ -170,8 +194,11 @@ private:
 public: 
   void print(size_t i = 0) const noexcept(false) {
     for (const auto& d: data_vector_) {
-      std::string mark = (d.is_checked_) ? "\x1b[92m*\x1b[0m" : " ";
-      std::cout << ++i << " [" << mark << "] " << d.msg_ << '\n';
+      if (d.is_checked_) {
+        std::cout << ++i << " [" << "\x1b[92m*\x1b[0m" << "] " << d.msg_ << '\n';
+      } else {
+        std::cout << ++i << " [ ] " << d.msg_ << '\n';
+      }
     }
   }
 };

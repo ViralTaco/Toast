@@ -1,5 +1,5 @@
 CXX = g++
-LDFLAGS = -std=c++2a -O3 -Wno-c++98-compat -Wno-c++98-compat-pedantic
+LDFLAGS = -std=gnu++17 -O3
 PREFIX = /usr/local
 
 .PHONY: install
