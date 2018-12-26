@@ -32,7 +32,7 @@ private:
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
   };
   static constexpr char kVersion[]{
-    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.2~a (https://github.com/ViralTaco/Toast)\n"
+    "toast Copyright (c) 2018 ViralTaco\nVersion 1.1.0 (https://github.com/ViralTaco/Toast)\n"
   };
   static constexpr char kHelp[]{
     "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
@@ -53,7 +53,7 @@ private:
     "usage: toast [make <string>] [cut <number>] [done <number>] [clear]\n"
   };
   const char *kVersion{
-    "toast Copyright (c) 2018 ViralTaco\nVersion 1.0.2~a (https://github.com/ViralTaco/Toast)\n"
+    "toast Copyright (c) 2018 ViralTaco\nVersion 1.1.0 (https://github.com/ViralTaco/Toast)\n"
   };
   const char *kHelp{
     "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
@@ -98,7 +98,7 @@ public:
   
   toast(const std::string command, const std::string arg) noexcept(true) 
   : filepath_{std::getenv("HOME")}, command_{command}, arg_{arg} {
-    if (arg.length() >= 60) print_usage();
+    if (not is_string_fine(arg)) print_usage();
     
     filepath_ += kFileName;
     data_vector_ = fill_data_vector(); 
@@ -106,6 +106,12 @@ public:
   }
   
 private:
+  bool is_string_fine(const std::string& arg) noexcept(true) {
+    return arg.length() < 60 
+       and arg.find('*') == std::string::npos 
+       and arg.find('\n') == std::string::npos;
+  }
+  
   void exec_command() noexcept(true) {
     if (command_ == "make" or command_ == "do") {
       mktoast();
@@ -180,7 +186,7 @@ private:
     std::vector<data> d;
     
     for (std::string line; std::getline(filestream, line);) {
-      bool done = line.find('*') != std::string::npos;
+      bool done = line.find_first_of('*') != std::string::npos;
       d.push_back(data(done, line.substr(line.find(']') + 2)));
     }
     return d;
