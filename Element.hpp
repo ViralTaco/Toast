@@ -4,7 +4,6 @@
  * <http://www.opensource.org/licenses/MIT>
  */
 #include <string>
-#include <utility>
 
 class Element {
 private:
@@ -36,6 +35,7 @@ public:
   
   void check() noexcept(true) {
     is_checked_ = true;
+    mark_ = " [\x1b[92m*\x1b[0m] ";
   }
   
   void uncheck() noexcept(true) {
