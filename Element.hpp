@@ -37,8 +37,4 @@ public:
     is_checked_ = true;
     mark_ = " [\x1b[92m*\x1b[0m] ";
   }
-  
-  void uncheck() noexcept(true) {
-    is_checked_ = false;
-  }
 };
