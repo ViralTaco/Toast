@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
         try {
           id = std::stoul(argv[2]);
         } catch (std::invalid_argument) {
-          
+          print_usage();
         }  
         if (command == "cut" or command == "rm") {
           is_success = toast.rm(id);
