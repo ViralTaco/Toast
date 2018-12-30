@@ -3,8 +3,8 @@ LDFLAGS = -std=gnu++17 -O3
 PREFIX = /usr/local
 
 .PHONY: install
-install: toast
-	$(CXX) toast.cpp $(LDFLAGS) -o toast
+install: Toast
+	$(CXX) Toast.cpp $(LDFLAGS) -o toast
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp toast $(DESTDIR)$(PREFIX)/bin/toast
 
