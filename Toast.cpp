@@ -4,13 +4,13 @@
  * <http://www.opensource.org/licenses/MIT>
  */
 
-#include "Toaster.hpp"
+#include "headers/Toaster.hpp"
 
 #include <cstring>
 
 namespace view {
 const std::string kVersion{
-  "toast Copyright (c) 2018 ViralTaco\nVersion 2.0.1 (https://github.com/ViralTaco/Toast)\n"
+  "toast Copyright (c) 2018 ViralTaco\nVersion 2.1.2 (https://github.com/ViralTaco/Toast)\n"
 };
 const std::string kHelpMsg{
   "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"

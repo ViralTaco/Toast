@@ -16,13 +16,11 @@ class Bread {
 private:  
   const std::string kPath_;
   std::vector<Element> elements_;
-  size_t count_;
 
 public: // Constructor
   Bread(const std::string path) noexcept(true) 
     : kPath_(path) {
     set_elements();
-    count_ = elements_.size();
   }
   
 private: // member functions
@@ -73,7 +71,7 @@ public: // member functions
   
 public: // member functions (getters)
   size_t get_bread_count() const noexcept(true) {
-    return count_;
+    return elements_.size();
   }
 
 public:

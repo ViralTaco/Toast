@@ -37,13 +37,13 @@ public:
   }
 
   bool rm(const size_t& id) noexcept(true) {
-    if (id - 1 >= bread_count_) return false;
+    if (id - 1 >= bread_.get_bread_count()) return false;
     bread_.rm(id - 1);
     return true;
   }
   
   bool check(const size_t& id) noexcept(true) {
-    if (id - 1 >= bread_count_) return false;
+    if (id - 1 >= bread_.get_bread_count()) return false;
     bread_.check(id - 1);
     return true;
   }

@@ -14,11 +14,11 @@ private:
 public:
   Element(bool is_checked, const std::string& content) noexcept(true) 
     : is_checked_(is_checked), content_(content)
-    , mark_((is_checked) ? " [\x1b[92m*\x1b[0m] " : " [ ] ") {
+    , mark_((is_checked) ? " [\x1b[92m*\x1b[0m] " : " [] ") {
   }
   
   Element(const std::string& content) noexcept(true) 
-    : is_checked_(false), content_(content), mark_(" [ ] ") {
+    : is_checked_(false), content_(content), mark_(" [] ") {
   }
   
   bool first() const noexcept(true) {
