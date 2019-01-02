@@ -11,7 +11,7 @@
 namespace view {
 const std::string kVersion{
   "toast Copyright (c) 2018 ViralTaco\n"
-  "Version 2.2.0 (https://github.com/ViralTaco/Toast)\n"
+  "Version 2.2.0~a (https://github.com/ViralTaco/Toast)\n"
 };
 const std::string kHelpMsg{
   "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
@@ -24,6 +24,7 @@ const std::string kHelpMsg{
   "done <ID>        Check the box of the toast ID\n"
   "                 ie: toast done 2\n"
   "check <ID>       Same as done\n"
+  "print <ID>       Prints the toast at the specified ID\n"
   "clear            Removes everything from the list\n"
   "version          Show version\n"
   "help             Show this help message\n"
