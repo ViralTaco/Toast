@@ -11,7 +11,7 @@
 namespace view {
 const std::string kVersion{
   "toast Copyright (c) 2018 ViralTaco\n"
-  "Version 2.2.0~a (https://github.com/ViralTaco/Toast)\n"
+  "Version 2.2.1 (https://github.com/ViralTaco/Toast)\n"
 };
 const std::string kHelpMsg{
   "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
@@ -39,7 +39,7 @@ const std::string kUsage{
   std::exit(EXIT_FAILURE);
 }
 
-bool is_user_sure() noexcept 
+bool is_user_sure()
 {
   while (true) {
     std::string answer{""};
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
   }
   
-  const std::string& command = argv[1];
+  const std::string command = argv[1];
   
   if (argc == 2) {
     if (command == "version" or command == "--version") {
