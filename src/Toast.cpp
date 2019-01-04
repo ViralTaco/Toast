@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Capobianco A.
+ * Copyright (c) 2018 - 2019 Capobianco A.
  * SPDX-License-Identifier: MIT 
  * <http://www.opensource.org/licenses/MIT>
  */
@@ -10,11 +10,11 @@
 
 namespace view {
 const std::string kVersion{
-  "toast Copyright (c) 2018 ViralTaco\n"
+  "toast Copyright (c) 2019 Capobianco A. (ViralTaco)\n"
   "Version 2.2.1 (https://github.com/ViralTaco/Toast)\n"
 };
 const std::string kHelpMsg{
-  "toast [make <string>] [cut <number>] [done <number>] [clear]\n\n"
+  "toast [make <string>] [cut <ID>] [done <ID>] [print <ID>] [clear]\n\n"
   "make <string>    Makes a toast \n"
   "                 ie: toast make \"Make a new toast\"\n"
   "do <string>      Same as make\n"
