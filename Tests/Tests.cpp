@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Capobianco A.
+ * Copyright (c) 2019 
  * SPDX-License-Identifier: MIT 
  * <http://www.opensource.org/licenses/MIT>
  */
@@ -9,8 +9,7 @@
 #include <cstring>
 #include <cassert>
 
-std::string get_string() 
-{
+std::string get_string() {
   std::string line;
   std::string result;
   std::ifstream test_file("./tests.txt", std::ifstream::in);
@@ -28,9 +27,10 @@ std::string get_string()
 }
 
 
-int main() 
-{
-  std::ofstream clear_file("./tests.txt", std::ofstream::out | std::ios::trunc);
+int main() {
+  std::ofstream clear_file("./tests.txt"
+  , std::ofstream::out | std::ios::trunc
+  );
   clear_file.close();
   
   #define NEW_TEST(...) do { 					\
@@ -53,7 +53,9 @@ int main()
   NEW_TEST(
     test += "\n";
     test += "*";
-    test += "Some text longer than 60 characters. Some text longer than 60 characters.";
+    test += "Some text longer than 60 characters."
+            "Some text longer than 60 characters."
+    ;
     test += "Another line of text";
   );
   
@@ -111,4 +113,7 @@ int main()
     count = test.get_count();
   );
   assert(count == 0);
+  
+  NEW_TEST(test += "test successful";);
+  TRY("1 [] test successful");
 }
